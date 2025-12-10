@@ -1,0 +1,13 @@
+FROM quay.io/fedora/fedora:latest
+
+# Install ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
+# Create ollama data directory
+RUN mkdir -p /root/.ollama
+
+# Expose ollama port
+EXPOSE 11434
+
+# Start ollama serve as the main process
+CMD ["ollama", "serve"]

@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: granite-coder-pod
+spec:
+  containers:
+  - name: granite-coder
+    image: quay.io/fedora/fedora:latest
+    command:
+    - /bin/bash
+    - -c
+    - |
+      # Install ollama
+      curl -fsSL https://ollama.com/install.sh | sh
+
+      # Start ollama in the background
+      ollama serve &
+
+      # Wait for ollama to be ready
+      sleep 10
+
+      # Pull the granite-code:3b model
+      ollama pull granite-code:3b
+
+      # Keep the container running and tail the logs
+      tail -f /dev/null
+    ports:
+    - containerPort: 11434
+      hostPort: 11434
+      protocol: TCP
+    volumeMounts:
+    - name: ollama-data
+      mountPath: /root/.ollama
+  volumes:
+  - name: ollama-data
+    hostPath:
+      path: /tmp/ollama-data
+      type: DirectoryOrCreate

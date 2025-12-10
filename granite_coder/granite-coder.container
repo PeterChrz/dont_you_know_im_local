@@ -1,0 +1,17 @@
+[Unit]
+Description=Granite Code LLM with Ollama
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=localhost/granite-coder:latest
+ContainerName=granite-coder
+PublishPort=11434:11434
+Volume=ollama-data:/root/.ollama
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target
