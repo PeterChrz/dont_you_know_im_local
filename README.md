@@ -32,23 +32,24 @@
 
   Winner: Containerfile + Quadlet
 
+---
 
-### Granite_Coder
+## Granite_Coder
 (inside the granite_coder dir)
 
  Quick Deploy:
 
-  #### 1. Build the image (once)
-  podman build -t granite-coder:latest .
+>  #### 1. Build the image (once)
+>  podman build -t granite-coder:latest .
 
-  #### 2. Install Quadlet file
-  mkdir -p ~/.config/containers/systemd/
-  cp granite-coder.container ~/.config/containers/systemd/
+>  #### 2. Install Quadlet file
+>  mkdir -p ~/.config/containers/systemd/
+>  cp granite-coder.container ~/.config/containers/systemd/
 
-  #### 3. Start as systemd service
-  systemctl --user daemon-reload
-  systemctl --user enable --now granite-coder.service
+>  #### 3. Start as systemd service
+>  systemctl --user daemon-reload
+>  systemctl --user enable --now granite-coder.service
 
-  #### 4. Pull the model via API
-  curl http://localhost:11434/api/pull -d '{"name":"granite-code:3b"}'
+>  #### 4. Pull the model via API
+>  curl http://localhost:11434/api/pull -d '{"name":"granite-code:3b"}'
 
