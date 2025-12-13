@@ -17,6 +17,9 @@ Models:
 >  #### 2. Install Quadlet file
 >  sudo cp granite-coder.container ~/.config/containers/systemd/
 >  sudo chmod 644 ~/.config/containers/systemd/granite-coder.container
+> systemctl --user daemon-reload
+> systemctl enable --user granite-coder
+> systemctl start --user granite-coder
 
 >  #### 3. Start as systemd service
 >  systemctl --user daemon-reload
