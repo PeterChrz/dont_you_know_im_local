@@ -1,41 +1,13 @@
 # dont_you_know_im_local
-- Creating containers running ollama and hosting local llm. 
 
-## Most Efficient Build? 
-1. Kube YAML (inline install)
+Our goal is to create containers running ollama and hosting local llms. From there we can build out more complex designs of agents, and bots. 
 
-  - ❌ Reinstalls ollama every start
-  - ❌ Runs install script each time
-  - ❌ Slow restarts (minutes)
-  - ✅ Simple single file
-  - Efficiency: WORST
+This guide is centered around Strix Halo AMD CPU's. My test maching being an HX375 which does not yet have ROCm drivers available.
 
 
-  2. Containerfile + Quadlet
-
-  - ✅ Ollama installed once at build time
-  - ✅ Ollama runs as PID 1 (minimal overhead)
-  - ✅ Fast restarts (seconds)
-  - ✅ Systemd manages container lifecycle
-  - ✅ Pull models via HTTP after start (persisted in volume)
-  - ❌ Two-step: build then deploy
-  - Efficiency: BEST
-
-
-  3. Systemd-inside-container + Quadlet
-
-  - ❌ Runs systemd inside container (extra overhead)
-  - ❌ More complex, more processes
-  - ❌ Still need to install ollama somehow
-  - ❌ Heavier than PID 1 approach
-  - Efficiency: WORSE than #2
-
-  Winner: Containerfile + Quadlet
-
+Models:
 ---
-
 ## Granite_Coder
-(inside the granite_coder dir)
 
  Quick Deploy:
 
@@ -43,8 +15,8 @@
 >  podman build -t granite-coder:latest .
 
 >  #### 2. Install Quadlet file
->  mkdir -p ~/.config/containers/systemd/
->  cp granite-coder.container ~/.config/containers/systemd/
+>  sudo cp granite-coder.container ~/.config/containers/systemd/
+>  sudo chmod 644 ~/.config/containers/systemd/granite-coder.container
 
 >  #### 3. Start as systemd service
 >  systemctl --user daemon-reload

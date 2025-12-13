@@ -1,5 +1,5 @@
 [Unit]
-Description=Granite Code LLM with Ollama
+Description=Granite Code LLM with vLLM
 After=network-online.target
 Wants=network-online.target
 
@@ -7,11 +7,25 @@ Wants=network-online.target
 Image=localhost/granite-coder:latest
 ContainerName=granite-coder
 PublishPort=11434:11434
-Volume=ollama-data:/root/.ollama
+
+# Cache HuggingFace models persistently
+Volume=hf-cache:/root/.cache/huggingface
+
+# AMD GPU passthrough for ROCm
+AddDevice=/dev/kfd
+AddDevice=/dev/dri
+# Pass host groups for GPU access
+GroupAdd=keep-groups
+# Disable SELinux labeling for GPU access
+SecurityLabelDisable=true
+# Let ROCm auto-detect the GPU (vllm-dev:nightly may support gfx1151)
+Environment=HIP_VISIBLE_DEVICES=0
+Environment=AMD_LOG_LEVEL=3
 
 [Service]
 Restart=always
-TimeoutStartSec=900
+# Longer timeout for initial model download
+TimeoutStartSec=1800
 
 [Install]
 WantedBy=default.target

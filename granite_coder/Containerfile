@@ -1,13 +1,16 @@
-FROM quay.io/fedora/fedora:latest
+FROM docker.io/rocm/vllm-dev:nightly
 
-# Install ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
+# Set working directory
+WORKDIR /app
 
-# Create ollama data directory
-RUN mkdir -p /root/.ollama
-
-# Expose ollama port
+# Expose vLLM API port
 EXPOSE 11434
 
-# Start ollama serve as the main process
-CMD ["ollama", "serve"]
+# Start vLLM OpenAI-compatible server
+# Model will be downloaded on first run and cached in the volume
+CMD ["python", "-m", "vllm.entrypoints.openai.api_server", \
+     "--model", "ibm-granite/granite-3b-code-base-2k", \
+     "--host", "0.0.0.0", \
+     "--port", "11434", \
+     "--max-model-len", "2048", \
+     "--enforce-eager"]
