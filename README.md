@@ -9,22 +9,30 @@ Models:
 ---
 ## Granite_Coder
 
- Quick Deploy:
+### Quick Deploy
 
->  #### 1. Build the image (once)
->  podman build -t granite-coder:latest .
+#### 1. Build the image (once)
+```bash
+podman build -t granite-coder:latest .
+```
 
->  #### 2. Install Quadlet file
->  sudo cp granite-coder.container ~/.config/containers/systemd/
->  sudo chmod 644 ~/.config/containers/systemd/granite-coder.container
-> systemctl --user daemon-reload
-> systemctl enable --user granite-coder
-> systemctl start --user granite-coder
+#### 2. Install Quadlet file
+```bash
+sudo cp granite-coder.container ~/.config/containers/systemd/
+sudo chmod 644 ~/.config/containers/systemd/granite-coder.container
+systemctl --user daemon-reload
+systemctl enable --user granite-coder
+systemctl start --user granite-coder
+```
 
->  #### 3. Start as systemd service
->  systemctl --user daemon-reload
->  systemctl --user enable --now granite-coder.service
+#### 3. Start as systemd service
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now granite-coder.service
+```
 
->  #### 4. Pull the model via API
->  curl http://localhost:11434/api/pull -d '{"name":"granite-code:3b"}'
+#### 4. Pull the model via API
+```bash
+curl http://localhost:11434/api/pull -d '{"name":"granite-code:3b"}'
+```
 
